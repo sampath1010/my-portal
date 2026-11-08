@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sampath Loka - Financial & Credential Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Tenali+Ramakrishna&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --sidebar-bg: #000000;
+      --card-bg: #f9fafb;
+      --text-main: #111827;
+      --text-secondary: #4b5563;
+      --accent: #4f46e5;
+      --accent-hover: #4338ca;
+      --border-color: #e5e7eb;
+      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      --success: #059669;
+      --danger: #dc2626;
+      --gold: #d97706;
+      --vault-purple: #7c3aed;
+      --salary-green: #059669;
+      --expense-orange: #ea580c;
+      --doc-blue: #0284c7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #ffffff;
+      color: var(--text-main);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* 1. LOGIN SCREEN STYLES - STYLISH REDESIGN */
+    #login-screen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #000000 100%);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+
+    .login-card {
+      position: relative;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      padding: 3rem 2.5rem;
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 480px;
+      text-align: center;
+    }
+
+    .login-avatar-img {
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 1.25rem auto;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      box-shadow: 0 0 30px rgba(79, 70, 229, 0.3);
+      background-color: #e5e7eb;
+    }
+
+    .login-card h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.75rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #111827, #4f46e5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.25rem;
+      letter-spacing: 0.05em;
+    }
+
+    .login-card .user-title-tag {
+      display: inline-block;
+      background: rgba(217, 119, 6, 0.1);
+      color: var(--gold);
+      padding: 0.3rem 0.85rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      border: 1px solid rgba(217, 119, 6, 0.2);
+    }
+
+    .login-field {
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+
+    .login-field label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .login-field input {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      background: #f9fafb;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      color: #111827;
+      font-size: 0.95rem;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .login-field input:focus {
+      border-color: var(--accent);
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+    }
+
+    .password-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .password-input-wrap input {
+      padding-right: 2.75rem;
+    }
+
+    .toggle-eye-btn {
+      position: absolute;
+      right: 0.75rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--accent), var(--vault-purple));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 0.5rem;
+      box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+    }
+
+    .login-btn:hover { opacity: 0.95; transform: translateY(-1px); }
+
+    .login-error {
+      color: var(--danger);
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      display: none;
+      font-weight: 600;
+    }
+
+    /* 2. MAIN APP WORKSPACE - LEFT SIDE BLACK, RIGHT SIDE WHITE */
+    #app-container {
+      display: none;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    aside {
+      width: 270px;
+      background-color: #000000;
+      border-right: 1px solid #222222;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 1rem;
+      gap: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .brand {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #ffffff, #9ca3af);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      padding-left: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .nav-section {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      flex: 1;
+    }
+
+    .nav-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #9ca3af;
+      padding-left: 0.75rem;
+      margin-bottom: 0.35rem;
+      font-weight: 700;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.8rem 0.85rem;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #d1d5db;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .nav-item:hover, .nav-item.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+      border-left: 4px solid #ffffff;
+    }
+
+    .logout-btn {
+      margin-top: auto;
+      background: rgba(220, 38, 38, 0.15);
+      color: #fca5a5;
+      border: 1px solid rgba(220, 38, 38, 0.3);
+    }
+
+    .logout-btn:hover { background: rgba(220, 38, 38, 0.25); color: #ffffff; }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      padding: 2rem 2.5rem;
+      gap: 2rem;
+      background: #ffffff;
+    }
+
+    .tab-content {
+      display: none;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .tab-content.active {
+      display: flex;
+    }
+
+    .welcome-header {
+      background: linear-gradient(135deg, #4f46e5 100%, #312e81 0%);
+      color: #ffffff;
+      padding: 2.25rem 2.5rem;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+    }
+
+    .user-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      color: #ffffff;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .user-name {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+
+    /* LOGIN TELUGU QUOTE */
+    .telugu-quote {
+      position: relative;
+      margin: 1.25rem 0 0.25rem;
+      padding: 1.6rem 1.25rem 1.1rem;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 1px solid rgba(217, 119, 6, 0.35);
+      box-shadow: 0 8px 20px rgba(217, 119, 6, 0.12);
+      text-align: center;
+    }
+    .telugu-quote::before, .telugu-quote::after {
+      content: '';
+      position: absolute; left: 14px; right: 14px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .telugu-quote::before { top: 8px; }
+    .telugu-quote::after { bottom: 8px; }
+    .tq-mark { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--gold); color: #fff; width: 30px; height: 30px; border-radius: 50%; font-size: 1.3rem; line-height: 34px; font-family: serif; }
+    .telugu-quote p { font-family: 'Tenali Ramakrishna', 'Noto Sans Telugu', sans-serif; font-size: 1.12rem; line-height: 1.95; color: #78350f; }
+    .telugu-quote small { display: block; margin-top: 0.6rem; font-family: 'Tenali Ramakrishna', sans-serif; font-size: 0.95rem; color: var(--gold); letter-spacing: 0.04em; }
+
+
+    /* TELUGU QUOTE ON SPECIAL DATES PAGE */
+    .dates-quote { margin: 1.5rem 0 0.5rem; padding: 2rem 1.75rem 1.5rem; background: linear-gradient(135deg, #fffbeb 0%, #fde68a 55%, #fef3c7 100%); border: 1px solid rgba(180, 83, 9, 0.4); box-shadow: 0 10px 28px rgba(180, 83, 9, 0.18); }
+    .dates-quote p { font-size: 1.45rem; line-height: 2.1; color: #7c2d12; text-shadow: 0 1px 0 rgba(255,255,255,0.7); max-width: 900px; margin: 0 auto; }
+    .dates-quote small { font-size: 1.05rem; color: #b45309; font-weight: 700; }
+
+    /* DIARY NOTE IN SPECIAL DATES */
+    .diary-note { margin-top: 0.6rem; padding: 0.75rem 0.95rem; background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%); border-left: 4px solid #0d9488; border-radius: 10px; color: #134e4a; font-size: 0.95rem; line-height: 1.7; white-space: pre-wrap; word-break: break-word; text-align: left; }
+    .diary-note .dn-label { display: block; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #0f766e; margin-bottom: 0.25rem; }
+
+    /* DAILY SPENDS */
+    .spend-banner { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); color: #fff; padding: 1.75rem 2rem; border-radius: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; box-shadow: var(--shadow); }
+    .spend-banner h2 { font-family: 'Outfit', sans-serif; font-size: 1.8rem; }
+    .spend-today { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); border-radius: 16px; padding: 0.8rem 1.4rem; text-align: center; }
+    .spend-today span { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    .spend-today strong { font-family: 'Outfit', sans-serif; font-size: 1.8rem; }
+    .spend-form { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 0.75rem; align-items: end; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.25rem; box-shadow: var(--shadow); }
+    .spend-form label { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 0.3rem; }
+    .spend-form input { width: 100%; padding: 0.75rem 0.9rem; background: #fff; border: 1px solid var(--border-color); border-radius: 10px; font-size: 0.95rem; outline: none; }
+    .spend-form input:focus { border-color: var(--accent); }
+    .amt { font-weight: 800; color: var(--expense-orange); font-family: 'Outfit', sans-serif; font-size: 1.05rem; }
+    .empty { text-align: center; color: var(--text-secondary); padding: 2rem !important; }
+
+    
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+    .metric-card:hover { transform: translateY(-3px); }
+
+    .metric-title {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .metric-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-top: 0.5rem;
+    }
+
+    .table-container {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.92rem;
+    }
+
+    th, td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    th {
+      background-color: #f3f4f6;
+      font-weight: 700;
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    tr:hover td { background-color: rgba(0, 0, 0, 0.01); }
+
+    .section-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #111827;
+    }
+
+    /* VAULT & BANNERS */
+    .vault-banner {
+      background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+      color: white;
+      padding: 1.75rem 2rem;
+      border-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .salary-banner {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: white;
+      padding: 1.75rem 2rem;
+      border-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .expense-banner {
+      background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+      color: white;
+      padding: 1.75rem 2rem;
+      border-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .pass-mask {
+      font-family: monospace;
+      letter-spacing: 0.1em;
+      background: #e5e7eb;
+      color: #065f46;
+      padding: 0.3rem 0.6rem;
+      border-radius: 6px;
+      display: inline-block;
+      border: 1px solid var(--border-color);
+    }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-secondary { background: #e5e7eb; color: var(--text-main); }
+    .btn-secondary:hover { background: #d1d5db; }
+    .btn-danger { background: rgba(220, 38, 38, 0.1); color: var(--danger); border: 1px solid rgba(220, 38, 38, 0.2); }
+    .btn-danger:hover { background: rgba(220, 38, 38, 0.2); }
+
+    .tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .tag-bank { background: rgba(37, 99, 235, 0.1); color: #1d4ed8; border: 1px solid rgba(37, 99, 235, 0.2); }
+    .tag-email { background: rgba(217, 119, 6, 0.1); color: #b45309; border: 1px solid rgba(217, 119, 6, 0.2); }
+    .tag-id { background: rgba(124, 58, 237, 0.1); color: #6d28d9; border: 1px solid rgba(124, 58, 237, 0.2); }
+    .tag-app { background: rgba(5, 150, 105, 0.1); color: #047857; border: 1px solid rgba(5, 150, 105, 0.2); }
+    .tag-other { background: rgba(107, 114, 128, 0.1); color: #374151; border: 1px solid rgba(107, 114, 128, 0.2); }
+    .tag-doc { background: rgba(2, 132, 199, 0.1); color: #0369a1; border: 1px solid rgba(2, 132, 199, 0.2); }
+    .tag-photo { background: rgba(219, 39, 119, 0.1); color: #be185d; border: 1px solid rgba(219, 39, 119, 0.2); }
+
+    .search-input {
+      padding: 0.7rem 1rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: #111827;
+      width: 100%;
+      max-width: 320px;
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--accent); }
+
+    .editable-textarea {
+      width: 100%;
+      min-height: 140px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      color: #111827;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .editable-textarea:focus { border-color: var(--accent); }
+
+    /* MODALS */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 10000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      width: 100%;
+      max-width: 480px;
+      border-radius: 20px;
+      padding: 2.25rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .modal-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #111827;
+    }
+
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 0.4rem;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: #f9fafb;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: #111827;
+      outline: none;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--accent); }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+    }
+
+    /* YEAR TABS */
+    .year-tabs { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+    .year-btn { padding: 0.6rem 1.5rem; border-radius: 999px; border: 1px solid var(--border-color); background: #fff; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; color: var(--text-secondary); transition: all 0.2s; }
+    .year-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .year-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .zero { color: #9ca3af; font-weight: 600; }
+
+    /* MOBILE RESPONSIVE FIXES */
+    @media (max-width: 768px) {
+      html, body {
+        height: 100%;
+        overflow: auto;
+      }
+
+      #login-screen {
+        height: 100dvh;
+        padding: 1rem;
+        align-items: center;
+      }
+
+      .login-card {
+        max-width: 100%;
+        width: 100%;
+        padding: 2rem 1.25rem;
+        border-radius: 18px;
+      }
+
+      .login-avatar-img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 1rem;
+      }
+
+      .login-card h2 {
+        font-size: 1.5rem;
+        white-space: normal;
+        line-height: 1.3;
+      }
+
+      #app-container {
+        flex-direction: column !important;
+        height: 100dvh;
+        width: 100vw;
+        overflow: hidden;
+      }
+
+      aside {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 0.75rem 0.5rem;
+        gap: 0.5rem;
+        border-right: none;
+        border-bottom: 1px solid #222222;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .brand { display: none; }
+      .nav-section { flex-direction: row; flex: 0 0 auto; gap: 0.4rem; }
+      .nav-title { display: none; }
+      .nav-item { flex: 0 0 auto; white-space: nowrap; padding: 0.6rem 0.75rem; font-size: 0.72rem; }
+      .nav-item.active, .nav-item:hover { border-left: none; border-bottom: 3px solid #ffffff; }
+      .logout-btn { margin-top: 0; }
+      main { padding: 1rem; gap: 1.25rem; flex: 1; overflow-y: auto; width: 100%; }
+      .welcome-header { padding: 1.25rem; border-radius: 16px; }
+      .metric-grid { grid-template-columns: 1fr !important; }
+      table { font-size: 0.85rem; }
+      th, td { padding: 0.7rem 0.6rem; }
+      html, body { overflow-x: hidden; -webkit-text-size-adjust: 100%; }
+      #login-screen { overflow-y: auto; align-items: center; }
+      .login-card { margin: auto; }
+      .telugu-quote p { font-size: 1.02rem; line-height: 1.85; }
+      .dates-quote p { font-size: 1.15rem; line-height: 1.95; }
+      main { min-width: 0; }
+      .user-name { font-size: 1.6rem; }
+      .metric-value { font-size: 1.5rem; word-break: break-word; }
+      input, select, textarea { font-size: 16px !important; }
+      .modal-card { padding: 1.5rem 1.25rem; max-height: 92dvh; overflow-y: auto; }
+      .spend-banner { padding: 1.25rem; border-radius: 16px; }
+      .spend-banner h2 { font-size: 1.4rem; }
+      .spend-today { width: 100%; }
+      .spend-form { grid-template-columns: 1fr; }
+      .spend-form button { width: 100%; justify-content: center; }
+      .rt { display: block; border: none; background: transparent; box-shadow: none; }
+      .rt thead { display: none; }
+      .rt tbody, .rt tbody tr, .rt tfoot, .rt tfoot tr { display: block; }
+      .rt tbody tr { background: #fff; border: 1px solid var(--border-color); border-radius: 12px; margin: 0.6rem 0; padding: 0.35rem 0.8rem; }
+      .rt tbody td { display: flex; justify-content: space-between; align-items: center; gap: 1rem; border: none; padding: 0.35rem 0; text-align: right; word-break: break-word; }
+      .rt tbody td::before { content: attr(data-label); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-secondary); text-align: left; flex: 0 0 auto; }
+      .rt tbody td.empty { display: block; }
+      .rt tbody td.empty::before { content: none; }
+      .rt tfoot td { display: block; padding: 0.7rem 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN OVERLAY - STYLISH & ATTRACTIVE REDESIGN -->
+  <div id="login-screen">
+    <div class="login-card">
+      <img src="IMG-20260221-WA0002.jpg" alt="Sampath" class="login-avatar-img">
+      <h2>SAMPATH PORTAL</h2>
+      <div class="user-title-tag">Secure Financial & Credential Vault</div>
+      
+      <form onsubmit="handleLogin(event)" style="margin-top: 1.5rem;">
+        <div class="login-field">
+          <label>User ID</label>
+          <input type="text" id="username" placeholder="Enter User ID" required>
+        </div>
+        <div class="login-field">
+          <label>Password</label>
+          <div class="password-input-wrap">
+            <input type="password" id="password" placeholder="Enter Password" required>
+            <button type="button" class="toggle-eye-btn" onclick="toggleLoginPasswordVisibility()">
+              <span id="login-eye-icon">👁️</span>
+            </button>
+          </div>
+        </div>
+        <button type="submit" class="login-btn">Sign In to Portal</button>
+        <div id="login-error" class="login-error">Invalid User ID or Password!</div>
+      </form>
+    </div>
+  </div>
+
+  <!-- APP CONTAINER (LEFT BLACK SIDEBAR, RIGHT WHITE CONTENT) -->
+  <div id="app-container">
+    <aside>
+      <div class="brand">✦ SAMPATH PORTAL ✦</div>
+      <div class="nav-section">
+        <div class="nav-title">Navigation Menu</div>
+        <a class="nav-item active" onclick="switchTab('spends', this)"><span class="icon">🧾</span> SPEND LEDGER</a>
+        <a class="nav-item" onclick="switchTab('dashboard', this)"><span class="icon">🏠</span> DASHBOARD & GOALS</a>
+        <a class="nav-item" onclick="switchTab('passwords', this)"><span class="icon">🔐</span> MY PASSWORDS</a>
+        <a class="nav-item" onclick="switchTab('salary', this)"><span class="icon">💰</span> SALARY DETAILS</a>
+        <a class="nav-item" onclick="switchTab('expenses', this)"><span class="icon">💳</span> MY EXPENSES</a>
+        <a class="nav-item" onclick="switchTab('notes', this)"><span class="icon">📝</span> NOTES</a>
+        <a class="nav-item" onclick="switchTab('dairy', this)"><span class="icon">📖</span> SPECIAL DATES</a>
+      </div>
+      <a class="nav-item logout-btn" onclick="handleLogout()"><span class="icon">🔒</span> LOG OUT</a>
+    </aside>
+
+    <main>
+      <!-- SPEND LEDGER TAB (HOME) -->
+      <div id="spends" class="tab-content active">
+        <div class="spend-banner">
+          <div>
+            <div class="user-badge">Spend Ledger</div>
+            <h2>🧾 Spend Tracker</h2>
+            <p>Note every spend with its name, amount and date.</p>
+          </div>
+          <div class="spend-today"><span>Today's Spend</span><strong id="spend-today-total">₹0/-</strong></div>
+        </div>
+
+        <!-- ALL ENTRIES TOTAL: BIG SIZE & CENTERED -->
+        <div style="display: flex; justify-content: center; width: 100%; margin: 0.5rem 0;">
+          <div class="metric-card" style="border-top: 4px solid var(--accent); width: 100%; max-width: 500px; text-align: center; padding: 2rem; background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);">
+            <div class="metric-title" style="font-size: 0.85rem; letter-spacing: 0.1em; color: var(--text-secondary);">All Entries Total</div>
+            <div id="spend-all-total" class="metric-value" style="font-size: 2.8rem; margin-top: 0.75rem; color: var(--accent);">₹0/-</div>
+          </div>
+        </div>
+
+        <form class="spend-form" onsubmit="saveSpend(event)">
+          <div><label>Name</label><input type="text" id="spend-name" placeholder="e.g. Washing machine" required></div>
+          <div><label>Rupees</label><input type="number" id="spend-amount" min="0" step="any" placeholder="e.g. 20000" required></div>
+          <div><label>Date</label><input type="date" id="spend-date" required></div>
+          <button type="submit" id="spend-save-btn" class="btn btn-primary" style="padding: 0.8rem 1.4rem;">➕ Add</button>
+        </form>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+          <h2 class="section-title" style="margin: 0;">📅 Spend List</h2>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <input type="date" id="spend-filter" class="search-input" style="max-width: 190px;" onchange="renderSpends()" title="Show a single day">
+            <button class="btn btn-secondary" onclick="document.getElementById('spend-filter').value='';renderSpends()">Show All</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead><tr><th>Name</th><th>Rupees</th><th>Date</th><th style="text-align: right;">Actions</th></tr></thead>
+            <tbody id="spend-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- DASHBOARD TAB -->
+      <div id="dashboard" class="tab-content">
+        <div class="welcome-header">
+          <div class="user-badge">Financial Management Workspace</div>
+          <div class="user-name">SAMPATH LOKA</div>
+          <div id="dash-year-subtitle">Targets, Goals & Spend Summary</div>
+        </div>
+
+        <div class="year-tabs" id="dash-year-tabs"></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <h2 class="section-title" style="margin: 0;">🎯 Goals, Targets & Key Reminders <span id="dash-goal-year" style="color: var(--accent);"></span></h2>
+          <button class="btn btn-primary" onclick="saveDashboardNotes()">💾 Save Changes</button>
+        </div>
+        <div class="metric-grid">
+          <div class="metric-card" style="border-top: 3px solid var(--gold);">
+            <div class="metric-title" style="margin-bottom: 0.5rem;">Savings Target & Status</div>
+            <textarea id="dash-goal-1" class="editable-textarea" style="min-height: 90px;"></textarea>
+          </div>
+          <div class="metric-card" style="border-top: 3px solid var(--success);">
+            <div class="metric-title" style="margin-bottom: 0.5rem;">Monthly Expense Budget</div>
+            <textarea id="dash-goal-2" class="editable-textarea" style="min-height: 90px;"></textarea>
+          </div>
+          <div class="metric-card" style="border-top: 3px solid var(--danger);">
+            <div class="metric-title" style="margin-bottom: 0.5rem;">Active Reminders</div>
+            <textarea id="dash-goal-3" class="editable-textarea" style="min-height: 90px;"></textarea>
+          </div>
+        </div>
+
+        <div class="metric-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+          <div class="metric-card" style="border-top: 3px solid var(--accent);">
+            <div id="dash-exp-title" class="metric-title">Total Expenses</div>
+            <div id="dash-total-exp" class="metric-value">₹0.00</div>
+          </div>
+          <div class="metric-card" style="border-top: 3px solid var(--salary-green);">
+            <div id="dash-inc-title" class="metric-title">Total Income</div>
+            <div id="dash-total-inc" class="metric-value" style="color: var(--salary-green);">₹0.00</div>
+          </div>
+          <div class="metric-card" style="border-top: 3px solid var(--success);">
+            <div class="metric-title">Total Saved (All Years)</div>
+            <div id="dash-total-saved" class="metric-value" style="color: var(--success);">₹0.00</div>
+          </div>
+        </div>
+
+        <h2 class="section-title">📊 Annual Spend Breakdown <span id="dash-break-year" style="color: var(--accent);"></span></h2>
+        <div class="table-container">
+          <table>
+            <thead><tr><th>Description</th><th>Annual Total (₹)</th><th>Share (%)</th></tr></thead>
+            <tbody id="dash-break-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MY PASSWORDS VAULT TAB -->
+      <div id="passwords" class="tab-content">
+        <div class="vault-banner">
+          <div>
+            <h2>🔐 Personal Credential Vault</h2>
+            <p>Private & Protected Credentials, Bank Accounts, and Government ID Records</p>
+          </div>
+          <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+            <button class="btn btn-primary" style="background: #ffffff; color: var(--vault-purple);" onclick="openAddModal()">➕ Add New Credential</button>
+            <button class="btn btn-secondary" onclick="toggleAllPasswords()">Show / Hide All Passwords</button>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <input type="text" id="vault-search" class="search-input" placeholder="🔍 Search credentials..." oninput="filterVault()">
+          <span id="vault-count-badge" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600;">11 Records Vaulted</span>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Category</th>
+                <th>Account / Service</th>
+                <th>User ID / Record Number</th>
+                <th>Password / Extra Info</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="vault-passwords-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SALARY TAB -->
+      <div id="salary" class="tab-content">
+        <div class="salary-banner">
+          <div>
+            <h2>💰 Salary & Income Tracker</h2>
+            <p>Yearly Gross Salary, Home Contribution & Sampath's Savings (June to May)</p>
+          </div>
+          <button class="btn btn-primary" style="background: white; color: var(--salary-green);" onclick="openAddYearModal()">➕ Add Year</button>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric-card" style="border-top: 3px solid var(--salary-green);">
+            <div class="metric-title">Total Lifetime Gross</div>
+            <div id="salary-total-gross" class="metric-value" style="color: var(--salary-green);">₹0</div>
+          </div>
+          <div class="metric-card" style="border-top: 3px solid var(--text-secondary);">
+            <div class="metric-title">Total Contribution to Home</div>
+            <div id="salary-total-home" class="metric-value" style="color: #374151;">₹0</div>
+          </div>
+          <div class="metric-card" style="border-top: 3px solid var(--success);">
+            <div class="metric-title">Sampath's Savings</div>
+            <div id="salary-total-savings" class="metric-value" style="color: var(--success);">₹0</div>
+          </div>
+        </div>
+
+        <h2 class="section-title">Yearly Summary</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Year (June–May)</th><th>Gross Salary (₹)</th><th>Home Share (₹)</th><th>Sampath (₹)</th><th style="text-align: right;">Actions</th></tr>
+            </thead>
+            <tbody id="salary-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- EXPENSES TAB -->
+      <div id="expenses" class="tab-content">
+        <div class="expense-banner">
+          <div>
+            <h2>💳 Expenses Tracker</h2>
+            <p>Year-wise & Month-wise Expense Sheet (January – December)</p>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <h2 class="section-title" style="margin: 0;">📅 Monthly Expense Sheet</h2>
+          <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+            <select id="year-select" class="search-input" style="max-width: 120px;" onchange="renderMonthSheet()" title="Year"></select>
+            <select id="month-select" class="search-input" style="max-width: 170px;" onchange="renderMonthSheet()" title="Month"></select>
+            <button class="btn btn-primary" style="background: var(--expense-orange);" onclick="openAddExpenseEntryModal()">➕ Add Extra Item</button>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr><th>Description</th><th>Amount (₹)</th><th style="text-align: right;">Actions</th></tr>
+            </thead>
+            <tbody id="month-sheet-tbody"></tbody>
+            <tfoot>
+              <tr style="font-weight: 700; background: rgba(234, 88, 12, 0.05);">
+                <td>Month Total Spend</td><td id="month-sheet-total" colspan="2">₹0.00</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- NOTES TAB -->
+      <div id="notes" class="tab-content">
+        <div class="welcome-header" style="background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);">
+          <div class="user-badge">Personal Scratchpad</div>
+          <div class="user-name">NOTES & IDEAS</div>
+          <div>Jot down thoughts, to-dos, or quick notes anytime. Saved securely inside this portal!</div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <h2 class="section-title" style="margin: 0;">📝 My Personal Notes</h2>
+          <span style="font-size: 0.85rem; color: var(--success); font-weight: 600;">✓ Auto-saving to Portal Storage</span>
+        </div>
+        <div class="card" style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; box-shadow: var(--shadow);">
+          <textarea id="user-notes-textarea" class="editable-textarea" style="min-height: 350px;" placeholder="Start writing your notes here..." oninput="autoSaveUserNotes()"></textarea>
+        </div>
+      </div>
+
+      <!-- DAIRY / MEMORY LANE TAB -->
+      <div id="dairy" class="tab-content">
+        <div class="welcome-header" style="background: linear-gradient(135deg, #0d9488 0%, #111827 100%);">
+          <div class="user-badge">Personal Special Dates</div>
+          <div class="user-name">SPECIAL DATES CHRONICLES</div>
+          <div>Never forget a special day! Add your dates and their significance.</div>
+        </div>
+
+      <div class="telugu-quote dates-quote"><span class="tq-mark">❝</span><p lang="te">నువ్వు జీవితంలో నీకు ఎదురయ్యే ప్రతి ఒక్కరిని ఓ పుస్తకంలా చూడు.. చదవడం నేర్చుకో.. ఆ తర్వాత నిన్ను నువ్వు చదువుకో.. ప్రపంచం ఒక అందమైన పుస్తకం దాన్ని చదవలేని వారికీ అది ఏ మాత్రం ఉపయోగపడదు.. నిన్ను నువ్వు నలుగురికి ఉపయోగపడేలా తీర్చిదిద్దుకో</p></div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+          <h2 class="section-title" style="margin: 0;">📖 Special Dates & Memories</h2>
+          <button class="btn btn-primary" style="background: #0d9488;" onclick="openAddDairyModal()">➕ Add Special Date</button>
+        </div>
+
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Speciality / Event Description</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="dairy-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODALS -->
+  <div id="dairy-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width: 560px; max-height: 92vh; overflow-y: auto;">
+      <h3 id="dairy-modal-title" class="modal-title" style="color: #0d9488;">Add Special Date</h3>
+      <form onsubmit="saveDairyEntry(event)">
+        <input type="hidden" id="dairy-edit-index" value="-1">
+        <div class="form-group">
+          <label>Date (e.g. 26 November 1997)</label>
+          <input type="text" id="dairy-date" placeholder="e.g. 26 November 1997" required>
+        </div>
+        <div class="form-group">
+          <label>Speciality / Event Description</label>
+          <input type="text" id="dairy-desc" placeholder="e.g. My birth day" required>
+        </div>
+        <div class="form-group">
+          <label>📝 My Diary Note - Experience &amp; Feelings (optional)</label>
+          <textarea id="dairy-note" class="editable-textarea" style="min-height: 160px;" placeholder="Write what happened on this day, how you felt, what you learned..."></textarea>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeDairyModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="background: #0d9488;">Save Date</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="cred-modal" class="modal-overlay">
+    <div class="modal-card">
+      <h3 id="modal-title-text" class="modal-title">Add New Credential</h3>
+      <form onsubmit="saveCredential(event)">
+        <input type="hidden" id="edit-index" value="-1">
+        <div class="form-group">
+          <label>Category</label>
+          <select id="cred-tag" required>
+            <option value="Bank">Bank Account / Net Banking</option>
+            <option value="Email">Email Account</option>
+            <option value="Govt ID">Government ID / Official</option>
+            <option value="App">Mobile / Web App</option>
+            <option value="Vehicle">Vehicle / Transport</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Credential / Service Name</label>
+          <input type="text" id="cred-type" placeholder="e.g. HDFC Credit Card" required>
+        </div>
+        <div class="form-group">
+          <label>User ID / Account No.</label>
+          <input type="text" id="cred-id" placeholder="e.g. sampath@gmail.com" required>
+        </div>
+        <div class="form-group">
+          <label>Password / Extra Details</label>
+          <input type="text" id="cred-pass" placeholder="e.g. Password@123">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Credential</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="year-modal" class="modal-overlay">
+    <div class="modal-card">
+      <h3 id="year-modal-title" class="modal-title">Add Year</h3>
+      <form onsubmit="saveYear(event)">
+        <input type="hidden" id="year-edit-index" value="-1">
+        <div class="form-group">
+          <label>Year (e.g. 2026+ for June-May)</label>
+          <input type="text" id="year-value" placeholder="e.g. 2026+" required>
+        </div>
+        <div class="form-group">
+          <label>Gross Salary (₹)</label>
+          <input type="number" id="year-gross" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label>Home Share (₹)</label>
+          <input type="number" id="year-home" step="0.01" required>
+        </div>
+        <div class="form-group">
+          <label>Sampath Savings (₹)</label>
+          <input type="number" id="year-savings" step="0.01" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeYearModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Year</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="expense-entry-modal" class="modal-overlay">
+    <div class="modal-card">
+      <h3 id="expense-modal-title" class="modal-title" style="color: var(--expense-orange);">Add Extra Item</h3>
+      <form onsubmit="saveExpenseEntry(event)">
+        <input type="hidden" id="expense-edit-index" value="-1">
+        <div class="form-group">
+          <label>Month</label>
+          <input type="text" id="expense-modal-month" readonly>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <input type="text" id="expense-entry-desc" placeholder="e.g. Gift, Trip, Laundry" required>
+        </div>
+        <div class="form-group">
+          <label>Amount (₹) or Math Expression (e.g., 9000+1000)</label>
+          <input type="text" id="expense-entry-amount" placeholder="e.g. 9000+1000" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" onclick="closeExpenseEntryModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary" style="background: var(--expense-orange);">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <script>
+    const VALID_USER = "sampath";
+    const VALID_PASS = "0626";
+
+    const defaultVault = [
+      { tag: "Email", type: "Gmail Account (Personal)", id: "sampathloka06@gmail.com", pass: "Sam@06loka" },
+      { tag: "Email", type: "Gmail Account (Official)", id: "er.sampath2109@gmail.com", pass: "Loka@sam2109" },
+      { tag: "Bank", type: "Axis Bank Net Banking", id: "sampath0626", pass: "Sampath@1234" },
+      { tag: "Bank", type: "HDFC Bank Net Banking", id: "sampath@06", pass: "Sampath@0626" },
+      { tag: "App", type: "IRCTC Rail APP", id: "sampathloka", pass: "Sampath@81430" },
+      { tag: "Bank", type: "Axis Bank Account Number", id: "919010081785986", pass: "UTIB0000030 (IFSC)" },
+      { tag: "Bank", type: "HDFC Bank Account Number", id: "50100882064892", pass: "HDFC0009015 (IFSC)" },
+      { tag: "Vehicle", type: "Bike Number", id: "TG09E6836", pass: "—" },
+      { tag: "Govt ID", type: "PF Number", id: "101675823695", pass: "—" },
+      { tag: "Govt ID", type: "Aadhaar Number", id: "[Aadhaar Redacted]", pass: "—" },
+      { tag: "Govt ID", type: "PAN Number", id: "AQSPL0688F", pass: "—" }
+    ];
+
+    let passwordVault = JSON.parse(localStorage.getItem('sampath_vault')) || defaultVault;
+    let allVisible = false;
+
+    const defaultDairyData = [
+      { date: "26 November 1997", desc: "My birth day" }
+    ];
+    let dairyData = JSON.parse(localStorage.getItem('sampath_dairy')) || defaultDairyData;
+    function saveDairyToStorage() { localStorage.setItem('sampath_dairy', JSON.stringify(dairyData)); }
+
+    const defaultSalaryData = [
+      { year: "2019+", gross: 25000, home: 11500, savings: 2914 },
+      { year: "2020+", gross: 152500, home: 95000, savings: 11628 },
+      { year: "2021+", gross: 180000, home: 124000, savings: 28044 },
+      { year: "2022+", gross: 15000, home: 9000, savings: 2598 },
+      { year: "2023+", gross: 279411, home: 241000, savings: 34991 },
+      { year: "2024+", gross: 408912, home: 354000, savings: 43302 },
+      { year: "2025+", gross: 522500, home: 352000, savings: 143560 },
+      { year: "2026+", gross: 237500, home: 24000, savings: 23300 }
+    ];
+    let salaryData = JSON.parse(localStorage.getItem('sampath_salary')) || defaultSalaryData;
+
+    const MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    const EXP_YEARS = [2026, 2027, 2028];
+    const FIXED_ITEMS = ["Home", "House Rent", "LIC", "Groceries", "Utility Bills (Current, Wi-Fi, Mobile)", "Metro Travel", "Petrol", "Snacks & Outside Food", "Shopping", "Medical", "Misc"];
+
+    const defaultMonthlyExpenses = {
+      "June 2026": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Current Bill (Electricity)", category: "Utilities", amount: 209 },
+        { desc: "Wi-fi Bill", category: "Utilities", amount: 471 },
+        { desc: "Mobile Recharge", category: "Utilities", amount: 229 },
+        { desc: "Home Needs", category: "Housing & Home", amount: 1071 },
+        { desc: "Groceries", category: "Groceries", amount: 4196 },
+        { desc: "Metro/Bus Travel", category: "Transport", amount: 3500 },
+        { desc: "Laundry", category: "Personal Care", amount: 330 },
+        { desc: "Petrol/Fuel", category: "Transport", amount: 700 },
+        { desc: "Snacks", category: "Food & Dining", amount: 967.92 },
+        { desc: "Online Orders", category: "Shopping", amount: 329 },
+        { desc: "Shiridi", category: "Travel/Trips", amount: 960 },
+        { desc: "Siddipet", category: "Travel/Trips", amount: 4205 },
+        { desc: "Movies / Outside Food", category: "Food & Dining", amount: 570 },
+        { desc: "Emergency/Misc", category: "Miscellaneous", amount: 171 }
+      ],
+      "July 2026": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Current Bill (Electricity)", category: "Utilities", amount: 251 },
+        { desc: "Wi-fi Bill", category: "Utilities", amount: 471 },
+        { desc: "Mobile Recharge", category: "Utilities", amount: 239 },
+        { desc: "Home Needs", category: "Housing & Home", amount: 300 },
+        { desc: "Health/ Medicine", category: "Health", amount: 650 },
+        { desc: "Groceries", category: "Groceries", amount: 3950 },
+        { desc: "Metro/Bus Travel", category: "Transport", amount: 3500 },
+        { desc: "Laundry", category: "Personal Care", amount: 275 },
+        { desc: "Petrol/Fuel", category: "Transport", amount: 500 },
+        { desc: "Snacks", category: "Food & Dining", amount: 234.82 },
+        { desc: "Online Orders", category: "Shopping", amount: 270 }
+      ],
+      "August 2026": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Utilities (Current/Wifi/Recharge)", category: "Utilities", amount: 1012 },
+        { desc: "Groceries", category: "Groceries", amount: 3902 },
+        { desc: "Transport (Metro/Petrol)", category: "Transport", amount: 3500 },
+        { desc: "Personal Care", category: "Personal Care", amount: 150 },
+        { desc: "Food & Dining", category: "Food & Dining", amount: 230 },
+        { desc: "Health / Medicine", category: "Health", amount: 430 }
+      ],
+      "September 2026": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Groceries", category: "Groceries", amount: 4000 }
+      ],
+      "October 2026": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Groceries", category: "Groceries", amount: 4000 }
+      ],
+      "November 2026": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Groceries", category: "Groceries", amount: 4000 }
+      ],
+      "December 2026": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Groceries", category: "Groceries", amount: 4000 }
+      ],
+      "January 2027": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Groceries", category: "Groceries", amount: 4000 }
+      ],
+      "February 2027": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Groceries", category: "Groceries", amount: 4000 }
+      ],
+      "March 2027": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Groceries", category: "Groceries", amount: 4000 }
+      ],
+      "April 2027": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Groceries", category: "Groceries", amount: 4000 }
+      ],
+      "May 2027": [
+        { desc: "Rent/Mortgage", category: "Housing & Home", amount: 9000 },
+        { desc: "LIC", category: "Savings & Insurance", amount: 4566 },
+        { desc: "Groceries", category: "Groceries", amount: 4000 }
+      ]
+    };
+    function mapOldExpense(desc, cat) {
+      const d = String(desc).toLowerCase();
+      if (/^rent|mortgage|house rent/.test(d)) return "House Rent";
+      if (/^lic/.test(d)) return "LIC";
+      if (cat === "Utilities" || /current|wi-?fi|recharge|utilit|electric/.test(d)) return FIXED_ITEMS[4];
+      if (/metro|bus/.test(d) || /^transport/.test(d)) return "Metro Travel";
+      if (/petrol|fuel/.test(d)) return "Petrol";
+      if (cat === "Groceries" || /grocer/.test(d)) return "Groceries";
+      if (cat === "Housing & Home" || /home/.test(d)) return "Home";
+      if (cat === "Food & Dining" || /snack|food|movie/.test(d)) return "Snacks & Outside Food";
+      if (cat === "Shopping" || /online order|shopping/.test(d)) return "Shopping";
+      if (cat === "Health" || /health|medic/.test(d)) return "Medical";
+      if (cat === "Miscellaneous" || /misc|emergency/.test(d)) return "Misc";
+      return null;
+    }
+    function migrateOldExpenses(old) {
+      const out = {};
+      Object.keys(old).forEach(key => {
+        const arr = [];
+        (old[key] || []).forEach(it => {
+          const amt = Number(it.amount);
+          if (!isFinite(amt)) return;
+          const target = mapOldExpense(it.desc || '', it.category || '');
+          if (target) {
+            let row = arr.find(x => x.fixed && x.desc === target);
+            if (!row) { row = { desc: target, amount: 0, fixed: true }; arr.push(row); }
+            row.amount = Math.round((row.amount + amt) * 100) / 100;
+          } else {
+            arr.push({ desc: it.desc, amount: amt, fixed: false });
+          }
+        });
+        out[key] = arr;
+      });
+      return out;
+    }
+    let monthlyExpenses = (() => {
+      try { const v2 = JSON.parse(localStorage.getItem('sampath_expenses_v2')); if (v2 && typeof v2 === 'object') return v2; } catch (e) {}
+      let old = null;
+      try { old = JSON.parse(localStorage.getItem('sampath_monthly_expenses')); } catch (e) {}
+      return migrateOldExpenses(old || defaultMonthlyExpenses);
+    })();
+
+    let userNotes = localStorage.getItem('sampath_user_notes') || "Write your personal notes or ideas here...";
+
+    document.getElementById('user-notes-textarea').value = userNotes;
+
+    function saveVaultToStorage() { localStorage.setItem('sampath_vault', JSON.stringify(passwordVault)); }
+    function saveSalaryToStorage() { localStorage.setItem('sampath_salary', JSON.stringify(salaryData)); }
+    function saveMonthlyExpensesToStorage() { localStorage.setItem('sampath_expenses_v2', JSON.stringify(monthlyExpenses)); }
+    
+    function autoSaveUserNotes() {
+      userNotes = document.getElementById('user-notes-textarea').value;
+      localStorage.setItem('sampath_user_notes', userNotes);
+    }
+
+    function saveDashboardNotes() {
+      for (let i = 1; i <= 3; i++) {
+        localStorage.setItem(`sampath_dash_goal_${i}_${dashYear}`, document.getElementById('dash-goal-' + i).value);
+      }
+      alert(`Goals and reminders for ${dashYear} saved successfully!`);
+    }
+
+    function getTagClass(tag) {
+      switch(tag) {
+        case 'Bank': return 'tag-bank';
+        case 'Email': return 'tag-email';
+        case 'Govt ID': case 'Vehicle': return 'tag-id';
+        case 'App': return 'tag-app';
+        default: return 'tag-other';
+      }
+    }
+
+    function toggleLoginPasswordVisibility() {
+      const pwField = document.getElementById('password');
+      const icon = document.getElementById('login-eye-icon');
+      if (pwField.type === 'password') { pwField.type = 'text'; icon.innerText = '🙈'; }
+      else { pwField.type = 'password'; icon.innerText = '👁️'; }
+    }
+
+    function handleLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('username').value.trim();
+      const pass = document.getElementById('password').value.trim();
+      if (user === VALID_USER && pass === VALID_PASS) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('app-container').style.display = 'flex';
+        document.getElementById('login-error').style.display = 'none';
+        renderPasswords();
+        renderSalaryTable();
+        populateMonthSelect();
+        renderMonthSheet();
+        renderDairyTable();
+        renderSpends();
+        renderDashboard(true);
+      } else {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    }
+
+    function handleLogout() {
+      document.getElementById('app-container').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'flex';
+      document.getElementById('username').value = '';
+      document.getElementById('password').value = '';
+    }
+
+    function switchTab(tabId, element) {
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('aside .nav-item').forEach(item => item.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      element.classList.add('active');
+      if (tabId === 'dashboard') renderDashboard(false);
+    }
+
+    // DAIRY LOGIC
+    function escapeDiaryNote(t) {
+      return String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    function renderDairyTable() {
+      const tbody = document.getElementById('dairy-tbody');
+      tbody.innerHTML = '';
+      if (dairyData.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color: var(--text-secondary);">No special dates added yet. Click "Add Special Date" to begin.</td></tr>`;
+        return;
+      }
+      dairyData.forEach((item, idx) => {
+        tbody.innerHTML += `
+          <tr>
+            <td data-label="Date"><strong>📅 ${item.date}</strong></td>
+            <td data-label="Event">${item.desc}${item.note ? `<div class="diary-note"><span class="dn-label">📝 My Diary</span>${escapeDiaryNote(item.note)}</div>` : ''}</td>
+            <td style="text-align: right; white-space: nowrap;">
+              <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="openEditDairyModal(${idx})">✏️</button>
+              <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="deleteDairyEntry(${idx})">🗑️</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function openAddDairyModal() {
+      document.getElementById('dairy-modal-title').innerText = "Add Special Date";
+      document.getElementById('dairy-edit-index').value = "-1";
+      document.getElementById('dairy-date').value = "";
+      document.getElementById('dairy-desc').value = "";
+      document.getElementById('dairy-note').value = "";
+      document.getElementById('dairy-modal').style.display = "flex";
+    }
+
+    function openEditDairyModal(index) {
+      const item = dairyData[index];
+      document.getElementById('dairy-modal-title').innerText = "Edit Special Date";
+      document.getElementById('dairy-edit-index').value = index;
+      document.getElementById('dairy-date').value = item.date;
+      document.getElementById('dairy-desc').value = item.desc;
+      document.getElementById('dairy-note').value = item.note || "";
+      document.getElementById('dairy-modal').style.display = "flex";
+    }
+
+    function closeDairyModal() { document.getElementById('dairy-modal').style.display = "none"; }
+
+    function saveDairyEntry(e) {
+      e.preventDefault();
+      const index = parseInt(document.getElementById('dairy-edit-index').value);
+      const date = document.getElementById('dairy-date').value.trim();
+      const desc = document.getElementById('dairy-desc').value.trim();
+      const note = document.getElementById('dairy-note').value.trim();
+      if (index === -1) {
+        dairyData.push({ date, desc, note });
+      } else {
+        dairyData[index] = { date, desc, note };
+      }
+      saveDairyToStorage();
+      renderDairyTable();
+      closeDairyModal();
+    }
+
+    function deleteDairyEntry(index) {
+      if (confirm(`Delete special date entry "${dairyData[index].date}"?`)) {
+        dairyData.splice(index, 1);
+        saveDairyToStorage();
+        renderDairyTable();
+      }
+    }
+
+    function renderPasswords(dataToRender = passwordVault) {
+      const vaultTbody = document.getElementById('vault-passwords-tbody');
+      vaultTbody.innerHTML = '';
+      document.getElementById('vault-count-badge').innerText = `${passwordVault.length} Records Vaulted`;
+
+      dataToRender.forEach((item, idx) => {
+        const isPassWord = item.pass && item.pass !== "—";
+        const tagClass = getTagClass(item.tag);
+        vaultTbody.innerHTML += `
+          <tr>
+            <td data-label="Category"><span class="tag ${tagClass}">${item.tag}</span></td>
+            <td data-label="Service"><strong>${item.type}</strong></td>
+            <td data-label="User ID"><code>${item.id}</code></td>
+            <td data-label="Password">${isPassWord ? `<span id="vault-pass-${idx}" class="pass-mask">${allVisible ? item.pass : '••••••••'}</span>` : `<span>${item.pass || '—'}</span>`}</td>
+            <td style="text-align: right; white-space: nowrap;">
+              ${isPassWord ? `<button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="togglePass('vault-pass-${idx}', '${item.pass}')">Show/Hide</button>` : ''}
+              <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="openEditModal(${idx})">✏️</button>
+              <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="deleteCredential(${idx})">🗑️</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    function togglePass(elementId, realValue) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      if (el.innerText === '••••••••') { el.innerText = realValue; el.style.background = '#e5e7eb'; }
+      else { el.innerText = '••••••••'; el.style.background = '#f3f4f6'; }
+    }
+
+    function toggleAllPasswords() {
+      allVisible = !allVisible;
+      renderPasswords();
+    }
+
+    function filterVault() {
+      const query = document.getElementById('vault-search').value.toLowerCase();
+      const filtered = passwordVault.filter(c => c.type.toLowerCase().includes(query) || c.id.toLowerCase().includes(query) || c.tag.toLowerCase().includes(query));
+      renderPasswords(filtered);
+    }
+
+    function openAddModal() {
+      document.getElementById('modal-title-text').innerText = "Add New Credential";
+      document.getElementById('edit-index').value = "-1";
+      document.getElementById('cred-tag').value = "Bank";
+      document.getElementById('cred-type').value = "";
+      document.getElementById('cred-id').value = "";
+      document.getElementById('cred-pass').value = "";
+      document.getElementById('cred-modal').style.display = "flex";
+    }
+
+    function openEditModal(index) {
+      const item = passwordVault[index];
+      document.getElementById('modal-title-text').innerText = "Edit Credential";
+      document.getElementById('edit-index').value = index;
+      document.getElementById('cred-tag').value = item.tag;
+      document.getElementById('cred-type').value = item.type;
+      document.getElementById('cred-id').value = item.id;
+      document.getElementById('cred-pass').value = item.pass;
+      document.getElementById('cred-modal').style.display = "flex";
+    }
+
+    function closeModal() { document.getElementById('cred-modal').style.display = "none"; }
+
+    function saveCredential(e) {
+      e.preventDefault();
+      const index = parseInt(document.getElementById('edit-index').value);
+      const tag = document.getElementById('cred-tag').value;
+      const type = document.getElementById('cred-type').value.trim();
+      const id = document.getElementById('cred-id').value.trim();
+      const pass = document.getElementById('cred-pass').value.trim() || '—';
+
+      if (index === -1) {
+        passwordVault.push({ tag, type, id, pass });
+      } else {
+        passwordVault[index] = { tag, type, id, pass };
+      }
+      saveVaultToStorage();
+      renderPasswords();
+      closeModal();
+    }
+
+    function deleteCredential(index) {
+      if (confirm(`Are you sure you want to delete "${passwordVault[index].type}"?`)) {
+        passwordVault.splice(index, 1);
+        saveVaultToStorage();
+        renderPasswords();
+      }
+    }
+
+    // SALARY LOGIC
+    function renderSalaryTable() {
+      const tbody = document.getElementById('salary-tbody');
+      tbody.innerHTML = '';
+      let totalGross = 0, totalHome = 0, totalSavings = 0;
+
+      salaryData.forEach((item, idx) => {
+        totalGross += item.gross;
+        totalHome += item.home;
+        totalSavings += item.savings;
+
+        tbody.innerHTML += `
+          <tr>
+            <td data-label="Year"><strong>${item.year}</strong></td>
+            <td data-label="Gross">₹${item.gross.toLocaleString('en-IN')}</td>
+            <td data-label="Home Share">₹${item.home.toLocaleString('en-IN')}</td>
+            <td data-label="Sampath" style="color: var(--success); font-weight: 700;">₹${item.savings.toLocaleString('en-IN')}</td>
+            <td style="text-align: right; white-space: nowrap;">
+              <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="openEditYearModal(${idx})">✏️</button>
+              <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="deleteYear(${idx})">🗑️</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      document.getElementById('salary-total-gross').innerText = '₹' + totalGross.toLocaleString('en-IN');
+      document.getElementById('salary-total-home').innerText = '₹' + totalHome.toLocaleString('en-IN');
+      document.getElementById('salary-total-savings').innerText = '₹' + totalSavings.toLocaleString('en-IN');
+    }
+
+    function openAddYearModal() {
+      document.getElementById('year-modal-title').innerText = "Add Year Salary";
+      document.getElementById('year-edit-index').value = "-1";
+      document.getElementById('year-value').value = "";
+      document.getElementById('year-gross').value = "";
+      document.getElementById('year-home').value = "";
+      document.getElementById('year-savings').value = "";
+      document.getElementById('year-modal').style.display = "flex";
+    }
+
+    function openEditYearModal(index) {
+      const item = salaryData[index];
+      document.getElementById('year-modal-title').innerText = "Edit Year Salary";
+      document.getElementById('year-edit-index').value = index;
+      document.getElementById('year-value').value = item.year;
+      document.getElementById('year-gross').value = item.gross;
+      document.getElementById('year-home').value = item.home;
+      document.getElementById('year-savings').value = item.savings;
+      document.getElementById('year-modal').style.display = "flex";
+    }
+
+    function closeYearModal() { document.getElementById('year-modal').style.display = "none"; }
+
+    function saveYear(e) {
+      e.preventDefault();
+      const index = parseInt(document.getElementById('year-edit-index').value);
+      const year = document.getElementById('year-value').value.trim();
+      const gross = parseFloat(document.getElementById('year-gross').value);
+      const home = parseFloat(document.getElementById('year-home').value);
+      const savings = parseFloat(document.getElementById('year-savings').value);
+
+      if (index === -1) {
+        salaryData.push({ year, gross, home, savings });
+      } else {
+        salaryData[index] = { year, gross, home, savings };
+      }
+      saveSalaryToStorage();
+      renderSalaryTable();
+      renderDashboard(false);
+      closeYearModal();
+    }
+
+    function deleteYear(index) {
+      if (confirm(`Delete salary record for ${salaryData[index].year}?`)) {
+        salaryData.splice(index, 1);
+        saveSalaryToStorage();
+        renderSalaryTable();
+        renderDashboard(false);
+      }
+    }
+
+    // EXPENSES LOGIC
+    const nowD = new Date();
+    let dashYear = EXP_YEARS.includes(nowD.getFullYear()) ? nowD.getFullYear() : EXP_YEARS[0];
+
+    function ensureMonth(key) {
+      let arr = Array.isArray(monthlyExpenses[key]) ? monthlyExpenses[key] : [];
+      const fixed = FIXED_ITEMS.map(n => arr.find(x => x.fixed && x.desc === n) || { desc: n, amount: 0, fixed: true });
+      const extras = arr.filter(x => !x.fixed);
+      monthlyExpenses[key] = fixed.concat(extras);
+      return monthlyExpenses[key];
+    }
+    function expKey() {
+      return `${document.getElementById('month-select').value} ${document.getElementById('year-select').value}`;
+    }
+    function fmtINR(n) { return '₹' + Number(n).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function safeEval(raw) {
+      if (!/^[0-9+\-*/().\s]+$/.test(raw)) throw new Error('bad');
+      const v = Function('"use strict"; return (' + raw + ')')();
+      if (typeof v !== 'number' || !isFinite(v)) throw new Error('bad');
+      return v;
+    }
+
+    function populateMonthSelect() {
+      const ys = document.getElementById('year-select');
+      const ms = document.getElementById('month-select');
+      if (!ys.options.length) {
+        ys.innerHTML = EXP_YEARS.map(y => `<option value="${y}">${y}</option>`).join('');
+        ms.innerHTML = MONTH_NAMES.map(m => `<option value="${m}">${m}</option>`).join('');
+        const y = EXP_YEARS.includes(nowD.getFullYear()) ? nowD.getFullYear() : EXP_YEARS[0];
+        ys.value = y;
+        ms.value = MONTH_NAMES[y === nowD.getFullYear() ? nowD.getMonth() : 0];
+      }
+    }
+
+    function renderMonthSheet() {
+      const key = expKey();
+      const items = ensureMonth(key);
+      const tbody = document.getElementById('month-sheet-tbody');
+      let total = 0, html = '';
+      items.forEach((item, idx) => {
+        total += item.amount;
+        const amt = item.amount ? fmtINR(item.amount) : '<span class="zero">—</span>';
+        html += `
+          <tr>
+            <td data-label="Description"><strong>${esc(item.desc)}</strong></td>
+            <td data-label="Amount">${amt}</td>
+            <td style="text-align: right; white-space: nowrap;">
+              <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="openEditExpenseEntryModal(${idx})">✏️</button>
+              ${item.fixed ? '' : `<button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="deleteExpenseEntry(${idx})">🗑️</button>`}
+            </td>
+          </tr>`;
+      });
+      tbody.innerHTML = html;
+      document.getElementById('month-sheet-total').innerText = fmtINR(total);
+    }
+
+    function openAddExpenseEntryModal() {
+      document.getElementById('expense-modal-title').innerText = "Add Extra Item";
+      document.getElementById('expense-edit-index').value = "-1";
+      document.getElementById('expense-modal-month').value = expKey();
+      const d = document.getElementById('expense-entry-desc');
+      d.value = ""; d.readOnly = false;
+      document.getElementById('expense-entry-amount').value = "";
+      document.getElementById('expense-entry-modal').style.display = "flex";
+    }
+
+    function openEditExpenseEntryModal(index) {
+      const key = expKey();
+      const item = ensureMonth(key)[index];
+      document.getElementById('expense-modal-title').innerText = item.fixed ? "Edit Amount" : "Edit Extra Item";
+      document.getElementById('expense-edit-index').value = index;
+      document.getElementById('expense-modal-month').value = key;
+      const d = document.getElementById('expense-entry-desc');
+      d.value = item.desc; d.readOnly = !!item.fixed;
+      document.getElementById('expense-entry-amount').value = item.amount || '';
+      document.getElementById('expense-entry-modal').style.display = "flex";
+    }
+
+    function closeExpenseEntryModal() { document.getElementById('expense-entry-modal').style.display = "none"; }
+
+    function saveExpenseEntry(e) {
+      e.preventDefault();
+      const editVal = parseInt(document.getElementById('expense-edit-index').value);
+      const desc = document.getElementById('expense-entry-desc').value.trim();
+      const rawAmount = document.getElementById('expense-entry-amount').value.trim();
+      let amount = 0;
+      try { amount = Math.round(safeEval(rawAmount) * 100) / 100; }
+      catch (err) { alert("Please enter a valid number or math expression (e.g. 9000+1000)"); return; }
+
+      const items = ensureMonth(expKey());
+      if (editVal === -1) {
+        items.push({ desc, amount, fixed: false });
+      } else if (items[editVal].fixed) {
+        items[editVal].amount = amount;
+      } else {
+        items[editVal] = { desc, amount, fixed: false };
+      }
+      saveMonthlyExpensesToStorage();
+      renderMonthSheet();
+      renderDashboard(false);
+      closeExpenseEntryModal();
+    }
+
+    function deleteExpenseEntry(index) {
+      const items = ensureMonth(expKey());
+      if (items[index].fixed) return;
+      if (confirm(`Delete expense item "${items[index].desc}"?`)) {
+        items.splice(index, 1);
+        saveMonthlyExpensesToStorage();
+        renderMonthSheet();
+        renderDashboard(false);
+      }
+    }
+
+    function dashDefaults(y) {
+      return [
+        y === 2026 ? "Savings Target (2026): ₹3,50,000\nCurrent: ₹2,90,337 (83% Achieved)" : `Savings Target (${y}): ₹0\nCurrent: ₹0`,
+        "Monthly Expense Budget: ₹25,000\nTarget threshold for strict control",
+        "LIC Payments\nReview bills on 1st of every month"
+      ];
+    }
+    function loadGoals() {
+      const defs = dashDefaults(dashYear);
+      for (let i = 1; i <= 3; i++) {
+        let v = localStorage.getItem(`sampath_dash_goal_${i}_${dashYear}`);
+        if (v === null && dashYear === 2026) v = localStorage.getItem(`sampath_dash_goal_${i}`);
+        document.getElementById('dash-goal-' + i).value = v !== null ? v : defs[i - 1];
+      }
+    }
+    function setDashYear(y) { dashYear = y; renderDashboard(true); }
+
+    function renderDashboard(reloadGoals) {
+      const y = dashYear;
+      document.getElementById('dash-year-tabs').innerHTML = EXP_YEARS.map(v => `<button class="year-btn ${v === y ? 'active' : ''}" onclick="setDashYear(${v})">${v}</button>`).join('');
+      document.getElementById('dash-year-subtitle').innerText = `Targets, Goals & Spend Summary • January – December ${y}`;
+      ['dash-goal-year', 'dash-break-year'].forEach(id => document.getElementById(id).innerText = `(${y})`);
+      document.getElementById('dash-exp-title').innerText = `Total Expenses (${y})`;
+      document.getElementById('dash-inc-title').innerText = `Total Income (${y})`;
+      if (reloadGoals) loadGoals();
+
+      let yearTotal = 0;
+      const itemTotals = {};
+      MONTH_NAMES.forEach(m => {
+        const arr = monthlyExpenses[`${m} ${y}`] || [];
+        const t = arr.reduce((a, x) => a + x.amount, 0);
+        yearTotal += t;
+        arr.forEach(x => { itemTotals[x.desc] = (itemTotals[x.desc] || 0) + x.amount; });
+      });
+
+      const names = FIXED_ITEMS.concat(Object.keys(itemTotals).filter(n => !FIXED_ITEMS.includes(n)));
+      let breakHtml = names.map(n => {
+        const t = itemTotals[n] || 0;
+        const share = yearTotal ? (t / yearTotal * 100).toFixed(2) : '0.00';
+        return `<tr><td data-label="Description"><strong>${esc(n)}</strong></td><td data-label="Annual Total">${t ? fmtINR(t) : '<span class="zero">—</span>'}</td><td data-label="Share">${share}%</td></tr>`;
+      }).join('');
+      breakHtml += `<tr style="font-weight: 700; background: rgba(79, 70, 229, 0.05);"><td data-label="Description">TOTAL</td><td data-label="Annual Total">${fmtINR(yearTotal)}</td><td data-label="Share">${yearTotal ? '100.00' : '0.00'}%</td></tr>`;
+      document.getElementById('dash-break-tbody').innerHTML = breakHtml;
+
+      const income = salaryData.filter(r => parseInt(r.year) === y).reduce((a, r) => a + r.gross, 0);
+      const saved = salaryData.reduce((a, r) => a + r.savings, 0);
+      document.getElementById('dash-total-exp').innerText = fmtINR(yearTotal);
+      document.getElementById('dash-total-inc').innerText = fmtINR(income);
+      document.getElementById('dash-total-saved').innerText = fmtINR(saved);
+    }
+
+    // DAILY SPENDS LOGIC
+    const SPEND_KEY = 'sampath_daily_spends';
+    let spends = JSON.parse(localStorage.getItem(SPEND_KEY)) || [];
+    let spendEditIdx = -1;
+    const esc = t => String(t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const fmtDate = d => { const [y, m, dd] = d.split('-'); return `${dd}/${m}/${y}`; };
+    const rs = n => Number(n).toLocaleString('en-IN') + '/-';
+    function todayISO() { const d = new Date(); return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10); }
+
+    function renderSpends() {
+      const f = document.getElementById('spend-filter').value;
+      if (!document.getElementById('spend-date').value) document.getElementById('spend-date').value = todayISO();
+      const list = spends.map((x, i) => ({ ...x, i })).filter(x => !f || x.date === f)
+        .sort((a, b) => b.date.localeCompare(a.date) || b.i - a.i);
+      const tb = document.getElementById('spend-tbody');
+      tb.innerHTML = list.length ? '' : `<tr><td colspan="4" class="empty">No spends noted yet. Add your first entry above.</td></tr>`;
+      list.forEach(x => {
+        tb.innerHTML += `
+          <tr>
+            <td data-label="Name"><strong>${esc(x.name)}</strong></td>
+            <td data-label="Rupees" class="amt">₹${rs(x.amount)}</td>
+            <td data-label="Date">${fmtDate(x.date)}</td>
+            <td style="text-align: right; white-space: nowrap;">
+              <button class="btn btn-secondary" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="editSpend(${x.i})">✏️</button>
+              <button class="btn btn-danger" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" onclick="deleteSpend(${x.i})">🗑️</button>
+            </td>
+          </tr>`;
+      });
+      const t = todayISO();
+      const sum = fn => spends.filter(fn).reduce((a, x) => a + x.amount, 0);
+      document.getElementById('spend-today-total').innerText = '₹' + rs(sum(x => x.date === t));
+      document.getElementById('spend-all-total').innerText = '₹' + rs(sum(() => true));
+    }
+
+    function saveSpend(e) {
+      e.preventDefault();
+      const entry = {
+        name: document.getElementById('spend-name').value.trim(),
+        amount: parseFloat(document.getElementById('spend-amount').value),
+        date: document.getElementById('spend-date').value
+      };
+      if (spendEditIdx === -1) spends.push(entry); else spends[spendEditIdx] = entry;
+      spendEditIdx = -1;
+      localStorage.setItem(SPEND_KEY, JSON.stringify(spends));
+      document.getElementById('spend-name').value = '';
+      document.getElementById('spend-amount').value = '';
+      document.getElementById('spend-save-btn').innerText = '➕ Add';
+      document.getElementById('spend-name').focus();
+      renderSpends();
+    }
+
+    function editSpend(i) {
+      spendEditIdx = i;
+      document.getElementById('spend-name').value = spends[i].name;
+      document.getElementById('spend-amount').value = spends[i].amount;
+      document.getElementById('spend-date').value = spends[i].date;
+      document.getElementById('spend-save-btn').innerText = '💾 Update';
+      document.getElementById('spend-name').focus();
+    }
+
+    function deleteSpend(i) {
+      if (confirm(`Delete "${spends[i].name}"?`)) {
+        spends.splice(i, 1);
+        spendEditIdx = -1;
+        localStorage.setItem(SPEND_KEY, JSON.stringify(spends));
+        renderSpends();
+      }
+    }
+
+    document.querySelectorAll('tbody[id]').forEach(tb => tb.closest('table').classList.add('rt'));
+  </script>
+</body>
+</html>
